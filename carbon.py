@@ -252,19 +252,23 @@ class onesector():
             # Calculate pi
             dlnpi = np.zeros((N,N))
             for OR, DE in np.ndindex((N,N)):
-                dlnpi[OR, DE] = (-theta)*dlnp[OR, DE] + theta*dlnP[DE] # arrary
-
+                dlnpi[OR, DE] = (-theta)*dlnp[OR, DE] + theta*dlnP[DE]
+            
+            # Calculate dlnw (update)
             for OR, DE in np.ndindex((N,N)):
-                dlnw[OR] += s[OR, DE] * (dlnw_old[DE] + dlntau[OR,DE]) #arrary
+                dlnw[OR] += s[OR, DE] * (dlnw_old[DE] + dlnpi[OR,DE])
 
             dlnw = dlnw - dlnw[0]
+            #dlnw = dlnw - dlnWGDP
 
             dif = np.max(np.abs(dlnw - dlnw_old))
+
+            Xm2 = dlnw * self.D
 
         # Define economic size
         X2 = np.zeros((N,N))
         for OR, DE in np.ndindex((N,N)):
-            X2[OR, DE] = dlnpi[OR, DE] + Xm2[DE] #arrary
+            X2[OR, DE] = dlnpi[OR, DE] + Xm2[DE] 
 
         logmodel = onesector(year=self.year, countries=self.countries, X=X2,
                              wL=dlnw*self.wL, theta=self.theta, nu=self.nu)
@@ -298,7 +302,7 @@ def test():
     dlntau = (1 + np.random.rand(N,N)/2 + 0.5)
     logmodel, dlnr, dlnrexp = tempmodel.log_linearization(dlntau=dlntau)
     print("How's log linearization going?")
-    tau2 = tau*tauhat
+    tau2 = tau*dlntau
     resolvemodel2 = onesector.from_static_parameters(countries, year=2023, theta=4, nu=0.5,
                                                                 tau=tau2, beta_L=beta_L, L=L, D=D)
     print(logmodel.X/resolvemodel2.X)
