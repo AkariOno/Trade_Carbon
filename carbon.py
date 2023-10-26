@@ -208,7 +208,7 @@ class onesector():
     # log_linear ---------------------------
     def log_linearization(self, dlntau):
         # Set convergence parameter
-        phi = 0.1 # convergence speed
+        #phi = 0.1 # convergence speed
         tol = 0.01 # convergence tolerance 
 
         # Start solving
@@ -217,22 +217,26 @@ class onesector():
         
         # Setting boxes
         X2 = np.zeros((N,N))
+        w = np.ones(N)
 
         # Initial dlnw
-        dlnw = np.zeros((N))
+        dlnw = np.zeros(N)
 
         # Normalization
         #dlnWGDP = np.sum(dlnw * self.wL) #WGDP = np.sum(w*L + r*K)          
         #dlnw = dlnw - dlnWGDP
         dlnw = dlnw - dlnw[0]
 
-        # Calculate pi
+        # Calculate pi, s dlns
         pi = np.zeros((N,N))
         s = np.zeros((N,N))
+        dlns = np.zeros((N,N))
 
         for OR, DE in np.ndindex((N,N)):
             pi[OR, DE] = self.X[OR, DE]/self.Xm[DE]
             s[OR,DE] = self.X[OR,DE] /self.Ym[OR]
+            dlns[OR, DE] = self.X[OR, DE] - self.Ym[OR]
+        
         dif = 1
 
         # Calculate beta_L
@@ -241,34 +245,57 @@ class onesector():
         while dif > tol:
             # Updata w and r
             dlnw_old = np.copy(dlnw)
+            w_old =np.copy(w)
+            dlns_old = np.copy(dlns)
+            s_old = np.copy(s)
 
             # Calculate price (phat) and price index (Phat)
             dlnp = np.zeros((N,N))
             dlnP = np.zeros((N))
             for OR, DE in np.ndindex((N,N)):
                 dlnp[OR, DE] = dlnw[OR] + dlntau[OR, DE]
-                dlnP[DE] += pi[OR, DE]*dlnp[OR, DE]
+                #dlnP[DE] += pi[OR, DE]*dlnp[OR, DE]
+                dlnP[DE] += s[OR, DE]*dlnp[OR, DE]
 
             # Calculate pi
             dlnpi = np.zeros((N,N))
             for OR, DE in np.ndindex((N,N)):
                 dlnpi[OR, DE] = (-theta)*dlnp[OR, DE] + theta*dlnP[DE]
-            
+
+            # Calculate w (update)
+            for OR, DE in np.ndindex((N,N)):
+                w[OR] += s_old[OR, DE] * w_old[DE]
+                        
+            # Calculate dlnw (update)
+            #for OR, DE in np.ndindex((N,N)):
+            #    dlnw[OR] += s[OR, DE] * (dlnw_old[DE] + dlnpi[OR,DE])
+
             # Calculate dlnw (update)
             for OR, DE in np.ndindex((N,N)):
-                dlnw[OR] += s[OR, DE] * (dlnw_old[DE] + dlnpi[OR,DE])
+                dlnw[OR] += (s_old[OR, DE]*w_old[DE]/w[OR])*(dlnw_old[DE] + dlns_old[OR, DE])
 
             dlnw = dlnw - dlnw[0]
             #dlnw = dlnw - dlnWGDP
 
             dif = np.max(np.abs(dlnw - dlnw_old))
 
-            Xm2 = dlnw * self.D
+            # Caluculate excess factor demand and supply
+            #Xm2 = dlnw * self.D
+            wLS2 = dlnw*(self.wL)
+            Xm2 = wLS2 + self.D
+            
+            for OR, DE in np.ndindex((N,N)):
+                dlnP[DE] += dlnp[OR, DE]*(theta)
+
+            dlns[OR, DE] = theta*dlnp[OR, DE] - dlnP[DE]
+            s[OR, DE] = math.exp(dlns[OR, DE])
+
 
         # Define economic size
         X2 = np.zeros((N,N))
         for OR, DE in np.ndindex((N,N)):
-            X2[OR, DE] = dlnpi[OR, DE] + Xm2[DE] 
+            #X2[OR, DE] = dlnpi[OR, DE] + Xm2[DE]
+            X2[OR, DE] = s[OR, DE] + Xm2[DE] 
 
         logmodel = onesector(year=self.year, countries=self.countries, X=X2,
                              wL=dlnw*self.wL, theta=self.theta, nu=self.nu)
