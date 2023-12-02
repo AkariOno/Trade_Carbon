@@ -208,8 +208,8 @@ class onesector():
     # log_linear ---------------------------
     def log_linearization(self, dlntau):
         # Set convergence parameter
-        #phi = 0.1 # convergence speed
-        tol = 0.01 # convergence tolerance 
+        phi = 0.1 # convergence speed
+        tol = 0.0001 # convergence tolerance 
 
         # Start solving
         N = self.N
@@ -217,88 +217,78 @@ class onesector():
         
         # Setting boxes
         X2 = np.zeros((N,N))
-        w = np.ones(N)
 
         # Initial dlnw
-        dlnw = np.zeros(N)
+        dlnw = np.zeros((N))
 
         # Normalization
-        #dlnWGDP = np.sum(dlnw * self.wL) #WGDP = np.sum(w*L + r*K)          
-        #dlnw = dlnw - dlnWGDP
-        dlnw = dlnw - dlnw[0]
+        dlnWGDP = np.sum(dlnw * self.wL) #WGDP = np.sum(w*L + r*K)          
+        dlnw = dlnw - dlnWGDP
+        #dlnw = dlnw - dlnw[0]
 
         # Calculate pi, s dlns
         pi = np.zeros((N,N))
         s = np.zeros((N,N))
-        dlns = np.zeros((N,N))
 
         for OR, DE in np.ndindex((N,N)):
             pi[OR, DE] = self.X[OR, DE]/self.Xm[DE]
             s[OR,DE] = self.X[OR,DE] /self.Ym[OR]
-            dlns[OR, DE] = self.X[OR, DE] - self.Ym[OR]
         
         dif = 1
 
         # Calculate beta_L
-        beta_L = np.ones((N))
+        # beta_L = np.ones((N))
 
         while dif > tol:
             # Updata w and r
             dlnw_old = np.copy(dlnw)
-            w_old =np.copy(w)
-            dlns_old = np.copy(dlns)
-            s_old = np.copy(s)
 
             # Calculate price (phat) and price index (Phat)
             dlnp = np.zeros((N,N))
             dlnP = np.zeros((N))
             for OR, DE in np.ndindex((N,N)):
                 dlnp[OR, DE] = dlnw[OR] + dlntau[OR, DE]
-                #dlnP[DE] += pi[OR, DE]*dlnp[OR, DE]
-                dlnP[DE] += s[OR, DE]*dlnp[OR, DE]
+                dlnP[DE] += pi[OR, DE]*dlnp[OR, DE]
 
             # Calculate pi
             dlnpi = np.zeros((N,N))
             for OR, DE in np.ndindex((N,N)):
                 dlnpi[OR, DE] = (-theta)*dlnp[OR, DE] + theta*dlnP[DE]
-
-            # Calculate w (update)
-            for OR, DE in np.ndindex((N,N)):
-                w[OR] += s_old[OR, DE] * w_old[DE]
-                        
+                       
             # Calculate dlnw (update)
-            #for OR, DE in np.ndindex((N,N)):
-            #    dlnw[OR] += s[OR, DE] * (dlnw_old[DE] + dlnpi[OR,DE])
-
-            # Calculate dlnw (update)
+            dlnw = np.zeros((N))
             for OR, DE in np.ndindex((N,N)):
-                dlnw[OR] += (s_old[OR, DE]*w_old[DE]/w[OR])*(dlnw_old[DE] + dlns_old[OR, DE])
+                dlnw[OR] += s[OR, DE] * (dlnw_old[DE] + phi*dlnpi[OR,DE])
 
-            dlnw = dlnw - dlnw[0]
-            #dlnw = dlnw - dlnWGDP
+            # Normalizetion
+            dlnWGDP = np.sum(dlnw * self.wL)
+            dlnw = dlnw - dlnWGDP
+            #dlnw = dlnw - dlnw[0]
+            #dlnw = dlnw / 2 + dlnw_old / 2
 
             dif = np.max(np.abs(dlnw - dlnw_old))
 
-            # Caluculate excess factor demand and supply
+            # Caluculate excsess factor demand and supply
             #Xm2 = dlnw * self.D
-            wLS2 = dlnw*(self.wL)
+            wLS2 = (1+dlnw)*(self.wL)
             Xm2 = wLS2 + self.D
             
             for OR, DE in np.ndindex((N,N)):
-                dlnP[DE] += dlnp[OR, DE]*(theta)
+                #dlnP[DE] += dlnp[OR, DE]*(theta)
+                dlnP[DE] += pi[OR, DE]*dlnp[OR, DE]
 
-            dlns[OR, DE] = theta*dlnp[OR, DE] - dlnP[DE]
-            s[OR, DE] = math.exp(dlns[OR, DE])
+            #dlns[OR, DE] = theta*dlnp[OR, DE] - dlnP[DE]
+            #s[OR, DE] = math.exp(dlns[OR, DE])
 
 
         # Define economic size
         X2 = np.zeros((N,N))
         for OR, DE in np.ndindex((N,N)):
-            #X2[OR, DE] = dlnpi[OR, DE] + Xm2[DE]
-            X2[OR, DE] = s[OR, DE] + Xm2[DE] 
+            X2[OR, DE] = (1 + dlnpi[OR, DE]) * pi[OR,DE] * Xm2[DE]
+            #X2[OR, DE] = s[OR, DE] + Xm2[DE] 
 
         logmodel = onesector(year=self.year, countries=self.countries, X=X2,
-                             wL=dlnw*self.wL, theta=self.theta, nu=self.nu)
+                                 wL=(1+dlnw)*self.wL, theta=self.theta, nu=self.nu)
         dlnr = dlnw - dlnP
         dlnrexp = Xm2 - self.Xm - dlnP 
         return logmodel, dlnr, dlnrexp  
@@ -326,10 +316,12 @@ def test():
                                                                 tau=tau1, beta_L=beta_L, L=L, D=D)
     print(hatmodel.X/resolvemodel.X)
 
-    dlntau = (1 + np.random.rand(N,N)/2 + 0.5)
+    #dlntau = (1 + np.random.rand(N,N)/2 + 0.5) ##
+    dlntau = np.random.rand(N,N)/100 
+    #dlntau = np.zeros((N,N))
     logmodel, dlnr, dlnrexp = tempmodel.log_linearization(dlntau=dlntau)
     print("How's log linearization going?")
-    tau2 = tau*dlntau
+    tau2 = tau * (1 + dlntau)
     resolvemodel2 = onesector.from_static_parameters(countries, year=2023, theta=4, nu=0.5,
                                                                 tau=tau2, beta_L=beta_L, L=L, D=D)
     print(logmodel.X/resolvemodel2.X)
