@@ -17,8 +17,8 @@ By running these programs, the following data and figures will be output from ea
 ```mermaid
 graph LR;
     A[MainDo.do] --> |Data clearing for EXIOBASE|B[CleanEXIOBASE.do]
-    C([Flow/transactions matrix]) --> |Input|D[EXIOBASE_NCLI.dta]
-    E([CO2 emisions]) --> |Input|D
+    C([Flow/transactions matrix]) --> |Create trade matrix|K[GOABSts.dta]
+    E([CO2 emisions]) --> |Input|D[EXIOBASE_NCLI.dta]
     B --> |Calculate Net Carbon Leakage Index|D
     A --> |Decompose and analyze NCLI|F[DecomposeElasticityNetCarbonLeakage.do]
     A --> |Variance-covariance analysis|G[DecomposeElasticityVariance.do]
@@ -27,6 +27,7 @@ graph LR;
     I --> J[EXOBASE_CLR.dta]
     C --> |Create trade matrix|K[GOABSts.dta]
     K --> |Input|J
+    K --> J
     J --> L(Figures of CLR)
    
 ```
