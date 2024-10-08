@@ -16,8 +16,12 @@ By running these programs, the following data and figures will be output from ea
 
 ```mermaid
 graph TD;
-    A[MainDo.do] --> |Data Clearing for EXIOBASE|B[CleanEXIOBASE.do]
+    A[MainDo.do] --> |Data clearing for EXIOBASE|B[CleanEXIOBASE.do]
     C([Flow/transactions matrix]) --> |Input|D[EXIOBASE_NCLI.dta]
     E([CO2 emisions]) --> |Input|D
     B --> |Calculate Net Carbon Leakage Index|D
+    A --> |Calculate and draw CLR|E[DrawCarbonLeakageRate.do"]
+    A --> |Decompose and analyze NCLI|F[DecomposeElasticityNetCarbonLeakage.do]
+    A --> |Variance-covariance analysis|G[DecomposeElasticityVariance.do]
+    A --> |Draw alphas, create figures|H[DrawAlphaScatterplot.do]
 ```
