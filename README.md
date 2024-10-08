@@ -26,6 +26,5 @@ graph LR;
     A --> |Variance-covariance analysis|H[DecomposeElasticityVariance.do]
     A --> |Draw alphas, create figures|I[DrawAlphaScatterplot.do]
     F --> J[EXOBASE_CLR.dta]
-    C --> |Create trade matrix|K[GOABSts.dta]
    
 ```
