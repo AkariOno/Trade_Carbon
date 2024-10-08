@@ -19,55 +19,50 @@ graph LR;
 
 %% Main Process Section
 subgraph Main_Process [Main Data Processing]
-    %% direction TB
-    A[MainDo.do]
-    B[CleanEXIOBASE.do]
-    F[DecomposeElasticityNetCarbonLeakage.do]
-    G[DecomposeElasticityVariance.do]
-    H[DrawAlphaScatterplot.do]
-    I[DrawCarbonLeakageRate.do]
+    [MainDo.do]
+    [CleanEXIOBASE.do]
+    [DecomposeElasticityNetCarbonLeakage.do]
+    [DecomposeElasticityVariance.do]
+    [DrawAlphaScatterplot.do]
+    [DrawCarbonLeakageRate.do]
 end
 
 %% Data Generation Section
 subgraph Data_Generation [Data Generation]
-    direction TB
-    C([Flow/transactions matrix])
-    K[GOABSts.dta]
-    D[EXIOBASE_NCLI.dta]
-    E([CO2 emissions])
-    J[EXOBASE_CLR.dta]
+    ([Flow/transactions matrix])
+    [GOABSts.dta]
+    [EXIOBASE_NCLI.dta]
+    ([CO2 emissions])
+    [EXOBASE_CLR.dta]
 end
 
 %% Data Visualization Section
 subgraph Data_Visualization [Visualization & Analysis]
-    direction TB
-    L(Figures of CLR)
-    M(Barplot of decomposed NCLI)
-    N(NCLItable)
-    O(Scatterplot of alphas)
+    (Figures of CLR)
+    (Barplot of decomposed NCLI)
+    (NCLItable)
+    (Scatterplot of alphas)
 end
 
 %% Connections between nodes
-A --> |Data clearing for EXIOBASE| B
-A --> |Decompose and analyze NCLI| F
-A --> |Variance-covariance analysis| G
-A --> |Draw alphas, create figures| H
-A --> |Calculate and draw CLR| I
+[MainDo.do] --> |Data clearing for EXIOBASE| [CleanEXIOBASE.do]
+[MainDo.do] --> |Decompose and analyze NCLI| [DecomposeElasticityNetCarbonLeakage.do]
+[MainDo.do] --> |Variance-covariance analysis| [DecomposeElasticityVariance.do]
+[MainDo.do] --> |Draw alphas, create figures| [DrawAlphaScatterplot.do]
+[MainDo.do] --> |Calculate and draw CLR| [DrawCarbonLeakageRate.do]
 
-C --> |Create trade matrix| K
-E --> |Input| D
-B --> |Calculate Net Carbon Leakage Index| D
-K --> |Input| D
-K --> |Input| J
-I --> J
-J --> L
-D --> |Input| M
-F --> |Analysis and barplot| M
-D --> |Input| N
-G --> |Analysis| N
-D --> |Input| O
-H --> |Scatterplot| O
-
-
+([Flow/transactions matrix]) --> |Create trade matrix| [GOABSts.dta]
+([CO2 emissions]) --> |Input| [EXIOBASE_NCLI.dta]
+[CleanEXIOBASE.do] --> |Calculate Net Carbon Leakage Index| [EXIOBASE_NCLI.dta]
+[GOABSts.dta] --> |Input| [EXIOBASE_NCLI.dta]
+[GOABSts.dta] --> |Input| [EXOBASE_CLR.dta]
+[DrawCarbonLeakageRate.do] --> [EXOBASE_CLR.dta]
+[EXOBASE_CLR.dta] --> (Figures of CLR)
+[EXIOBASE_NCLI.dta] --> |Input| (Barplot of decomposed NCLI)
+[DecomposeElasticityNetCarbonLeakage.do] --> |Analysis and barplot| (Barplot of decomposed NCLI)
+[EXIOBASE_NCLI.dta] --> |Input| (NCLItable)
+[DecomposeElasticityVariance.do] --> |Analysis| (NCLItable)
+[EXIOBASE_NCLI.dta] --> |Input| (Scatterplot of alphas)
+[DrawAlphaScatterplot.do] --> |Scatterplot| (Scatterplot of alphas)
    
 ```
