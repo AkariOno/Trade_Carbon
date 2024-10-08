@@ -21,7 +21,4 @@ graph TD;
     E([CO2 emisions]) --> |Input|D
     B --> |Calculate Net Carbon Leakage Index|D
     A --> |Calculate and draw CLR|E[DrawCarbonLeakageRate.do"]
-    A --> |Decompose and analyze NCLI|F[DecomposeElasticityNetCarbonLeakage.do]
-    A --> |Variance-covariance analysis|G[DecomposeElasticityVariance.do]
-    A --> |Draw alphas, create figures|H[DrawAlphaScatterplot.do]
 ```
