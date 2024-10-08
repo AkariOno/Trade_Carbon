@@ -30,5 +30,7 @@ graph LR;
     J --> L(Figures of CLR)
     D --> |Input|M(Barplot of decomposed NCLI)
     F --> |Analysis and barplot|M
+    D --> |Input|N(NCLItable)
+    G --> N
    
 ```
