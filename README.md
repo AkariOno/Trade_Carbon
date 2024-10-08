@@ -19,6 +19,7 @@ graph LR;
 
 %% Main Process Section
 subgraph Main_Process [Main Data Processing]
+style Main_Process font-size:20px
     A[MainDo.do]
     B[CleanEXIOBASE.do]
     C[DecomposeElasticityNetCarbonLeakage.do]
@@ -29,6 +30,7 @@ end
 
 %% Data Generation Section
 subgraph Data_Generation [Data Generation]
+style Data_Generation font-size:20px
     G([Flow/transactions matrix])
     H[GOABSts.dta]
     I[EXIOBASE_NCLI.dta]
@@ -38,6 +40,7 @@ end
 
 %% Data Visualization Section
 subgraph Data_Visualization [Visualization & Analysis]
+style Data_Visualization font-size:20px
     L(Figures of CLR)
     M(Barplot of decomposed NCLI)
     N(NCLItable)
