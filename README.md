@@ -17,20 +17,7 @@ By running these programs, the following data and figures will be output from ea
 ```mermaid
 graph TD;
     A[MainDo.do] --> |Data Clearing for EXIOBASE|B[CleanEXIOBASE.do]
-    C([Flow/transactions matrix]) --> |Input|D
-    B --> |Calculate export, gross output, gross output share, absorption, trade flow/gross output, and trade flow/absorption|D[GOABSts.dta]
-    D --> |Take GO ABS country level|E[GOABS.dta]
-    B --> |Calculate energy expenditure|F[Energy.dta]
-    B --> |Clean CO2 contents of production|G[CO2.dta]
-    E --> |Calculate alpha and beta|H[countrydata.dta]
-    F --> H
-    G --> H
-    H --> |Calculate world alpha|I[alphaw.dta]
-    D --> |Calculate alphatilde|J[GOABStsalpha.dta]
-    H --> J
-    I --> J
-    K([Trade elasticity]) --> |Input|J
-    J --> |Calculate Net Carbon Leakage Index|L[EXIOBASE_NCLI.dta]
-    M([CO2 emissions]) --> |Input|G
-    C --> F
+    C([Flow/transactions matrix]) --> |Input|D[EXIOBASE_NCLI.dta]
+    E([CO2 emisions]) --> |Input|D
+    B --> |Calculate Net Carbon Leakage Index|D
 ```
