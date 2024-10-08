@@ -52,15 +52,15 @@ A --> |Draw alphas, create figures| E
 A --> |Calculate and draw CLR| F
 
 G --> |Create trade matrix| H
-J --> |Input| I
+J --> I
 B --> |Calculate gross output and absorption| H
 H --> |Calculate Net Carbon Leakage Index| I
-H --> |Input| K
+H --> K
 F --> K
 K --> L
-I --> |Input| M
-I --> |Input| N
-I --> |Input| O
+I --> M
+I --> N
+I --> O
 C --> |Analysis and barplot| M
 D --> |Analysis| N
 E --> |Scatterplot| O
