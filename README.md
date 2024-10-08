@@ -15,7 +15,7 @@ This repository includes codes for "Which Industries Are Prone To Carbon Leakage
 By running these programs, the following data and figures will be output from each do file stored in this repository:
 
 ```mermaid
-graph TB;
+graph LR;
 
 %% Main Process Section
 subgraph Main_Process [Main Data Processing]
