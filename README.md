@@ -20,13 +20,13 @@ graph LR;
     C([Flow/transactions matrix]) --> |Input|D[EXIOBASE_NCLI.dta]
     E([CO2 emisions]) --> |Input|D
     B --> |Calculate Net Carbon Leakage Index|D
-    A --> |Calculate and draw CLR|F[DrawCarbonLeakageRate.do]
-    A --> |Decompose and analyze NCLI|G[DecomposeElasticityNetCarbonLeakage.do]
-    A --> |Variance-covariance analysis|H[DecomposeElasticityVariance.do]
-    A --> |Draw alphas, create figures|I[DrawAlphaScatterplot.do]
-    F --> J[EXOBASE_CLR.dta]
+    A --> |Decompose and analyze NCLI|F[DecomposeElasticityNetCarbonLeakage.do]
+    A --> |Variance-covariance analysis|G[DecomposeElasticityVariance.do]
+    A --> |Draw alphas, create figures|H[DrawAlphaScatterplot.do]
+    A --> |Calculate and draw CLR|I[DrawCarbonLeakageRate.do]
+    I --> J[EXOBASE_CLR.dta]
     C --> |Create trade matrix|K[GOABSts.dta]
     K --> |Input|J
-    J --> L((Figures of CLR))
+    J --> L(Figures of CLR)
    
 ```
