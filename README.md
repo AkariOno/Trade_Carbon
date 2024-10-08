@@ -25,6 +25,7 @@ graph LR;
     A --> |Draw alphas, create figures|H[DrawAlphaScatterplot.do]
     A --> |Calculate and draw CLR|I[DrawCarbonLeakageRate.do]
     I --> J[EXOBASE_CLR.dta]
+    K --> |Input|D
     K --> |Input|J
     J --> L(Figures of CLR)
    
