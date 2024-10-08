@@ -15,24 +15,58 @@ This repository includes codes for "Which Industries Are Prone To Carbon Leakage
 By running these programs, the following data and figures will be output from each do file stored in this repository:
 
 ```mermaid
-graph LR;
-    A[MainDo.do] --> |Data clearing for EXIOBASE|B[CleanEXIOBASE.do]
-    C([Flow/transactions matrix]) --> |Create trade matrix|K[GOABSts.dta]
-    E([CO2 emisions]) --> |Input|D[EXIOBASE_NCLI.dta]
-    B --> |Calculate Net Carbon Leakage Index|D
-    A --> |Decompose and analyze NCLI|F[DecomposeElasticityNetCarbonLeakage.do]
-    A --> |Variance-covariance analysis|G[DecomposeElasticityVariance.do]
-    A --> |Draw alphas, create figures|H[DrawAlphaScatterplot.do]
-    A --> |Calculate and draw CLR|I[DrawCarbonLeakageRate.do]
-    I --> J[EXOBASE_CLR.dta]
-    K --> |Input|D
-    K --> |Input|J
-    J --> L(Figures of CLR)
-    D --> |Input|M(Barplot of decomposed NCLI)
-    F --> |Analysis and barplot|M
-    D --> |Input|N(NCLItable)
-    G --> |Analysis|N
-    D --> |Input|O(Scatterplot of alphas)
-    H --> |Scatterplot|O
+graph TB;
+
+%% Main Process Section
+subgraph Main_Process [Main Data Processing]
+    direction TB
+    A[MainDo.do]
+    B[CleanEXIOBASE.do]
+    F[DecomposeElasticityNetCarbonLeakage.do]
+    G[DecomposeElasticityVariance.do]
+    H[DrawAlphaScatterplot.do]
+    I[DrawCarbonLeakageRate.do]
+end
+
+%% Data Generation Section
+subgraph Data_Generation [Data Generation]
+    direction TB
+    C([Flow/transactions matrix])
+    K[GOABSts.dta]
+    D[EXIOBASE_NCLI.dta]
+    E([CO2 emissions])
+    J[EXOBASE_CLR.dta]
+end
+
+%% Data Visualization Section
+subgraph Data_Visualization [Visualization & Analysis]
+    direction TB
+    L(Figures of CLR)
+    M(Barplot of decomposed NCLI)
+    N(NCLItable)
+    O(Scatterplot of alphas)
+end
+
+%% Connections between nodes
+A --> |Data clearing for EXIOBASE| B
+A --> |Decompose and analyze NCLI| F
+A --> |Variance-covariance analysis| G
+A --> |Draw alphas, create figures| H
+A --> |Calculate and draw CLR| I
+
+C --> |Create trade matrix| K
+E --> |Input| D
+B --> |Calculate Net Carbon Leakage Index| D
+K --> |Input| D
+K --> |Input| J
+I --> J
+J --> L
+D --> |Input| M
+F --> |Analysis and barplot| M
+D --> |Input| N
+G --> |Analysis| N
+D --> |Input| O
+H --> |Scatterplot| O
+
    
 ```
