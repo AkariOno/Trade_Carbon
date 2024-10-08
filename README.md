@@ -19,7 +19,7 @@ graph LR;
 
 %% Main Process Section
 subgraph Main_Process [Main Data Processing]
-    direction TB
+    direction LR
     A[MainDo.do]
     B[CleanEXIOBASE.do]
     F[DecomposeElasticityNetCarbonLeakage.do]
@@ -30,7 +30,7 @@ end
 
 %% Data Generation Section
 subgraph Data_Generation [Data Generation]
-    direction TB
+    direction LR
     C([Flow/transactions matrix])
     K[GOABSts.dta]
     D[EXIOBASE_NCLI.dta]
@@ -40,7 +40,7 @@ end
 
 %% Data Visualization Section
 subgraph Data_Visualization [Visualization & Analysis]
-    direction TB
+    direction LR
     L(Figures of CLR)
     M(Barplot of decomposed NCLI)
     N(NCLItable)
