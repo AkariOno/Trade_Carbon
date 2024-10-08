@@ -31,6 +31,8 @@ graph LR;
     D --> |Input|M(Barplot of decomposed NCLI)
     F --> |Analysis and barplot|M
     D --> |Input|N(NCLItable)
-    G --> N
+    G --> |Analysis|N
+    D --> |Input|O(Scatterplot of alphas)
+    H --> |Scatterplot|O
    
 ```
