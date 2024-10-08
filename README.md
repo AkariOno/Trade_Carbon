@@ -53,8 +53,8 @@ A --> |Calculate and draw CLR| F
 
 G --> |Create trade matrix| H
 J --> |Input| I
-B --> |Calculate Net Carbon Leakage Index| I
-H --> |Input| I
+B --> |Calculate gross output and absorption| H
+H --> |Calculate Net Carbon Leakage Index| I
 H --> |Input| K
 F --> K
 K --> L
