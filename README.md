@@ -15,7 +15,7 @@ This repository includes codes for "Which Industries Are Prone To Carbon Leakage
 By running these programs, the following data and figures will be output from each do file stored in this repository:
 
 ```mermaid
-graph TD;
+graph LR;
     A[MainDo.do] --> |Data clearing for EXIOBASE|B[CleanEXIOBASE.do]
     C([Flow/transactions matrix]) --> |Input|D[EXIOBASE_NCLI.dta]
     E([CO2 emisions]) --> |Input|D
