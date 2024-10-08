@@ -20,5 +20,6 @@ graph TD;
     C([Flow/transactions matrix]) --> |Input|D[EXIOBASE_NCLI.dta]
     E([CO2 emisions]) --> |Input|D
     B --> |Calculate Net Carbon Leakage Index|D
-    A --> |Calculate and draw CLR|E[DrawCarbonLeakageRate.do"]
+
+    A --> |Draw alphas, create figures|H[DrawAlphaScatterplot.do]
 ```
