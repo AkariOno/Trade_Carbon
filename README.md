@@ -16,7 +16,8 @@ By running these programs, the following data and figures will be output from ea
 
 ```mermaid
 graph TD;
-    A[MainDo.do] --> |Data Clearing for EXIOBASE|B[CleanEXIOBASE.do]
+   A[MainDo.do] --> |Data Clearing for EXIOBASE|B[CleanEXIOBASE.do]
+    C[Flow/transactions matrix] --> |Input|B
     B --> |Calculate export, gross output, gross output share, absorption, trade flow/gross output, and trade flow/absorption|D[GOABSts.dta]
     D --> |Take GO ABS country level|E[GOABS.dta]
     B --> |Calculate energy expenditure|F[Energy.dta]
@@ -30,4 +31,5 @@ graph TD;
     I --> J
     K[final_tariff_WIOD_rev2016_2022.dta] --> |Merge trade elasticity|J
     J --> |Calculate Net Carbon Leakage Index|L[EXIOBASE_NCLI.dta]
+    M[CO2 emissions] --> |Input|G
 ```
