@@ -27,6 +27,5 @@ graph LR;
     A --> |Draw alphas, create figures|I[DrawAlphaScatterplot.do]
     F --> J[EXOBASE_CLR.dta]
     C --> |Create trade matrix|K[GOABSts.dta]
-    K --> |Input|J
    
 ```
