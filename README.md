@@ -17,7 +17,6 @@ By running these programs, the following data and figures will be output from ea
 ```mermaid
 graph TD;
     A[MainDo.do] --> |Data Clearing for EXIOBASE|B[CleanEXIOBASE.do]
-    A --> |Data Clearing for WIOD|C[CleanWIOT.do]
     B --> |Calculate export, gross output, gross output share, absorption, trade flow/gross output, and trade flow/absorption|D[GOABSts.dta]
     D --> |Take GO ABS country level|E[GOABS.dta]
     B --> |Calculate energy expenditure|F[Energy.dta]
