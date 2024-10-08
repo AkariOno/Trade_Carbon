@@ -22,7 +22,8 @@ graph TD;
     D --> |Take GO ABS country level|E[GOABS.dta]
     B --> |Calculate energy expenditure|F[Energy.dta]
     B --> |Clean CO2 contents of production|G[CO2.dta]
-    F --> |Calculate alpha and beta|H[countrydata.dta]
+    E --> |Calculate alpha and beta|H[countrydata.dta]
+    F --> H
     G --> H
     H --> |Calculate world alpha|I[alphaw.dta]
     D --> |Calculate alphatilde|J[GOABStsalpha.dta]
