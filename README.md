@@ -29,7 +29,7 @@ graph TD;
     D --> |Calculate alphatilde|J[GOABStsalpha.dta]
     H --> J
     I --> J
-    K[final_tariff_WIOD_rev2016_2022.dta] --> |Merge trade elasticity|J
+    K([Trade elasticity]) --> |Input|J
     J --> |Calculate Net Carbon Leakage Index|L[EXIOBASE_NCLI.dta]
     M([CO2 emissions]) --> |Input|G
     C --> F
