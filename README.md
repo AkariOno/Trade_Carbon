@@ -16,6 +16,7 @@ By running these programs, the following data and figures will be output from ea
 
 ```mermaid
 graph LR;
+graph LR;
     A[MainDo.do] --> |Data clearing for EXIOBASE|B[CleanEXIOBASE.do]
     C([Flow/transactions matrix]) --> |Input|D[EXIOBASE_NCLI.dta]
     E([CO2 emisions]) --> |Input|D
@@ -27,4 +28,5 @@ graph LR;
     F --> J[EXOBASE_CLR.dta]
     C --> |Create trade matrix|K[GOABSts.dta]
     K --> |Input|J
+    J --> L((Figures of CLR))
 ```
