@@ -28,5 +28,7 @@ graph LR;
     K --> |Input|D
     K --> |Input|J
     J --> L(Figures of CLR)
+    D --> |Input|M(Barplot of decomposed NCLI)
+    F --> |Analysis and barplot|M
    
 ```
