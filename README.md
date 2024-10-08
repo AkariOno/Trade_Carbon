@@ -1,6 +1,10 @@
 # EITEs
 
-This repository includes codes for "Which Industries Are Prone To Carbon Leakage?". To start, 
+This repository includes codes for "What Industries Are Prone To Carbon Leakage?"
+
+## Summary of the Data Generating Process
+
+To start, 
 1. Clone this repository
 2. Get raw data from various sources
    - WIOD 2016 edition
@@ -12,7 +16,7 @@ This repository includes codes for "Which Industries Are Prone To Carbon Leakage
 3. Change current directory in MainDo.do
 4. Run MainDo.do
 
-By running these programs, the following data and figures will be output from each do file stored in this repository:
+The following data and figures are output from each do file stored in this repository.
 
 ```mermaid
 graph LR;
@@ -66,3 +70,14 @@ D --> |Analysis| N
 E --> |Scatterplot| O
    
 ```
+
+##  Details of Raw Data
+
+* [World Input-Output Database](https://www.rug.nl/ggdc/valuechain/wiod/wiod-2016-release)
+  *  WIOD 2016 release: World Input-output tables
+  *  Environment Accounts: Data on energy use and CO2 emissions by industry and country
+* [EXIOBASE](https://www.exiobase.eu/)
+  * IOT_YYYY_ixi.zip
+    * Z.txt: Flow/transactions matrix
+    * satellite > D_pba.txt: Production based CO2 emissions per sector
+* [Product-Level Trade Elasticity](https://sites.google.com/view/product-level-trade-elasticity)
