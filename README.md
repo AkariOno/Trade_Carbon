@@ -7,12 +7,13 @@ This repository includes codes for "What Industries Are Prone To Carbon Leakage?
 To start, 
 1. Clone this repository
 2. Get raw data from various sources
-   - WIOD 2016 edition
-   - WIOD environmental account
-   - EXIOBASE
-        - Flow/transactions matrix
-        - CO2 emissions (production based accounts per sector)
-   - Trade elasticity (WIOD 2016)
+   - [World Input-Output Database](https://www.rug.nl/ggdc/valuechain/wiod/wiod-2016-release)
+      - WIOD 2016 edition
+      - WIOD environmental account
+   - [EXIOBASE](https://www.exiobase.eu/)
+      - Flow/transactions matrix
+      - CO2 emissions (production based accounts per sector)
+   - [Trade elasticity (WIOD 2016)](https://sites.google.com/view/product-level-trade-elasticity)
 3. Change current directory in MainDo.do
 4. Run MainDo.do
 
