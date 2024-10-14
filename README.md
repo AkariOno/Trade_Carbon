@@ -206,7 +206,7 @@ Results of regression NCLI on alpha, t, s by year.
 
 <br>
 
-### [DecomposeElasticityVariance](https://github.com/yutawatabe/EITEs/blob/main/do/DecomposeElasticityVariance.do)
+### [DecomposeElasticityVariance.do](https://github.com/yutawatabe/EITEs/blob/main/do/DecomposeElasticityVariance.do)
 - **Inputs**   
 1. [EXIOBASE_NCLI.dta](https://github.com/yutawatabe/EITEs/blob/main/results/EXIOBASE/EXIOBASE_NCLI.dta)
 
